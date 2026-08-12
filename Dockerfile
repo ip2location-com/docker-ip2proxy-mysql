@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:13-slim
 
 LABEL maintainer="support@ip2location.com"
 
@@ -13,12 +13,6 @@ ADD custom.cnf /etc/mysql/mariadb.conf.d/999-custom.cnf
 ADD run.sh /run.sh
 ADD update.sh /update.sh
 RUN chmod 755 /*.sh
-
-# Exposed ENV
-ENV TOKEN=FALSE
-ENV CODE=FALSE
-ENV IP_TYPE=FALSE
-ENV MYSQL_PASSWORD=FALSE
 
 # Add VOLUMEs
 VOLUME  ["/etc/mysql", "/var/lib/mysql"]
