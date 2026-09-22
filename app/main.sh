@@ -270,7 +270,6 @@ field "Database" "ip2proxy_database"
 field "User" "admin"
 field "Password" "$MYSQL_PASSWORD"
 printf '\n  %smariadb -h ip2proxy -u admin --password="%s" ip2proxy_database%s\n' "$C_DIM" "$MYSQL_PASSWORD" "$C_RESET"
-note "Connection details are also stored in /ip2proxy.conf inside the container."
 printf '\n'
 
 echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" > /ip2proxy.conf
