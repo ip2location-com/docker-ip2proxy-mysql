@@ -2,20 +2,19 @@ FROM debian:13-slim
 
 LABEL maintainer="support@ip2location.com"
 
-# Install packages
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y mariadb-server wget unzip
+RUN apt-get update && apt-get install -y mariadb-server wget unzip \
+	&& rm -rf /var/lib/apt/lists/*
 
-# Add MySQL configuration
-ADD custom.cnf /etc/mysql/mariadb.conf.d/999-custom.cnf
+ADD app/custom.cnf /etc/mysql/mariadb.conf.d/999-custom.cnf
 
-# Add scripts
-ADD run.sh /run.sh
-ADD update.sh /update.sh
+ADD app/main.sh /main.sh
+ADD app/update.sh /update.sh
+ADD app/entrypoint.sh /entrypoint.sh
 RUN chmod 755 /*.sh
 
-# Add VOLUMEs
-VOLUME  ["/etc/mysql", "/var/lib/mysql"]
+VOLUME ["/var/lib/mysql"]
 
 EXPOSE 3306 33060
-CMD ["bash", "/run.sh"]
+
+ENTRYPOINT ["/entrypoint.sh"]
